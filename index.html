@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Budget Tracker (GBP)</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+</head>
+<body>
+    <!-- Hidden PDF template -->
+    <div id="pdf-template" style="display: none;">
+        <div class="pdf-content">
+            <div class="pdf-header">
+                <h1>Budget Summary</h1>
+                <div class="pdf-date"></div>
+            </div>
+
+            <div class="pdf-summary">
+                <div class="pdf-summary-item">
+                    <div class="pdf-summary-label">Current Balance</div>
+                    <div class="pdf-balance-amount"></div>
+                </div>
+                <div class="pdf-summary-item">
+                    <div class="pdf-summary-label">Total Income</div>
+                    <div class="pdf-income-amount"></div>
+                </div>
+                <div class="pdf-summary-item">
+                    <div class="pdf-summary-label">Total Expenses</div>
+                    <div class="pdf-expense-amount"></div>
+                </div>
+            </div>
+
+            <div class="pdf-charts">
+                <div class="pdf-chart-container">
+                    <h2>Income vs Expenses</h2>
+                    <div class="pdf-balance-chart"></div>
+                </div>
+                <div class="pdf-chart-container">
+                    <h2>Monthly Trends</h2>
+                    <div class="pdf-trend-chart"></div>
+                </div>
+            </div>
+
+            <div class="pdf-transactions">
+                <h2>Transaction History</h2>
+                <div class="pdf-transaction-list"></div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="container">
+        <header>
+            <h1>Budget Tracker</h1>
+            <div class="balance-card">
+                <h2>Total Balance</h2>
+                <p id="balance">£0.00</p>
+            </div>
+            <div class="summary">
+                <div class="income-card">
+                    <h3>Income</h3>
+                    <p id="income">£0.00</p>
+                </div>
+                <div class="expense-card">
+                    <h3>Expenses</h3>
+                    <p id="expense">£0.00</p>
+                </div>
+            </div>
+        </header>
+
+        <main>
+            <div class="main-content">
+                <section class="transaction-form">
+                    <h2>Add New Transaction</h2>
+                    <form id="transactionForm">
+                        <div class="form-group">
+                            <label for="type">Type</label>
+                            <select id="type" required>
+                                <option value="income">Income</option>
+                                <option value="expense">Expense</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="category">Category</label>
+                            <select id="category" required>
+                                <option value="">Select a category...</option>
+                                <!-- Categories will be populated by JavaScript -->
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="description">Additional Details (Optional)</label>
+                            <input type="text" id="description" placeholder="Enter additional details...">
+                        </div>
+                        <div class="form-group">
+                            <label for="date">Date</label>
+                            <input type="date" id="date" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="amount">Amount (£)</label>
+                            <input type="number" id="amount" placeholder="Enter amount..." step="0.01" min="0.01" required>
+                        </div>
+                        <button type="submit">Add Transaction</button>
+                    </form>
+                </section>
+
+                <section class="transactions">
+                    <div class="transactions-header">
+                        <h2>Transaction History</h2>
+                        <div class="action-buttons">
+                            <button id="toggleHistory"><span class="action-icon">📋</span> Toggle History</button>
+                            <button id="exportData"><span class="action-icon">💾</span> Export Data</button>
+                            <button id="exportPDF"><span class="action-icon">📄</span> Export PDF</button>
+                        </div>
+                    </div>
+                    <div id="transactionList" class="transaction-list"></div>
+                </section>
+            </div>
+
+            <section class="charts-container">
+                <div class="chart-card">
+                    <h2>Income vs Expenses</h2>
+                    <div class="chart-wrapper">
+                        <canvas id="balanceChart"></canvas>
+                    </div>
+                </div>
+                <div class="chart-card">
+                    <h2>6-Month Trend</h2>
+                    <div class="chart-wrapper">
+                        <canvas id="trendChart"></canvas>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+    <script defer src="script.js"></script>
+</body>
+</html>
